@@ -1,0 +1,139 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phishing Awareness Drive</title>
+    <style> 
+        body {
+            font-family: Times New Roman, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        .email {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin: 15px 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .buttons {
+            margin-top: 10px;
+        }
+        button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        button.safe {
+            background-color: #4caf50;
+            color: white;
+        }
+        button.phishing {
+            background-color: #f44336;
+            color: white;
+        }
+        .result {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Phishing Awareness Drive (Employee Training Program)</h1>
+    <div id="emails"></div>
+    <script>
+        // sample email data to train employees
+        const emails = [
+            {
+                id: 1,
+                subject: "Your account is locked! Click here to unlock it.",
+                sender: "support@bank-secure.com",
+                url: "http://bank-secure-login.com",
+                isPhishing: true
+            },
+            {
+                id: 2,
+                subject: "Welcome to our newsletter!",
+                sender: "newsletter@legitcompany.com",
+                url: "https://legitcompany.com/newsletter",
+                isPhishing: false
+            },
+            {
+                id: 3,
+                subject: "Claim your free prize now!",
+                sender: "promo@freegiftz.com",
+                url: "http://freegiftz.com",
+                isPhishing: true
+            },
+            {
+                id: 4,
+                subject: "Your package is ready for pickup.",
+                sender: "tracking@shipping-company.com",
+                url: "https://shipping-company.com/track",
+                isPhishing: false
+            },
+            {
+                id: 5,
+                subject: "Help, its your mum! Send me $500 I'm stuck at the gas station.",
+                sender: "todd@definitelyyourmum.com",
+                url: "http://awesome-hacker-login.com",
+                isPhishing: false
+            },
+            {
+                id: 6,
+                subject: "Hi, its your boss. Please send me your login details and your
+                password, I am trying to update our database.",
+                sender: "boss@your-companyxyz123.com",
+                url: "http://your-company-xyz123.com",
+                isPhishing: false
+            }
+        ];
+
+        const emailsContainer = document.getElementById('emails');
+
+        // function for emails
+        function renderEmails() {
+            emails.forEach(email => {
+                const emailDiv = document.createElement('div');
+                emailDiv.className = 'email';
+                emailDiv.innerHTML = `
+                    <p><strong>Subject:</strong> ${email.subject}</p>
+                    <p><strong>Sender:</strong> ${email.sender}</p>
+                    <p><strong>URL:</strong> <a href="${email.url}" target="_blank">${email.url}</a></p>
+                    <div class="buttons">
+                        <button class="safe" onclick="checkEmail(${email.id}, false)">Mark as Safe</button>
+                        <button class="phishing" onclick="checkEmail(${email.id}, true)">Mark as Phishing</button>
+                    </div>
+                    <p class="result" id="result-${email.id}"></p>
+                `;
+                emailsContainer.appendChild(emailDiv);
+            });
+        }
+
+        // Function to check user's response
+        function checkEmail(emailId, userMarkedPhishing) {
+            const email = emails.find(e => e.id === emailId);
+            const resultElement = document.getElementById(`result-${emailId}`);
+            if (email.isPhishing === userMarkedPhishing) {
+                resultElement.textContent = "Correct! You identified this email correctly.";
+                resultElement.style.color = "green";
+            } else {
+                resultElement.textContent = "Incorrect! Review the details carefully.";
+                resultElement.style.color = "red";
+            }
+        }
+
+        // Render the emails on page load
+        renderEmails();
+    </script>
+</body>
+</html>
